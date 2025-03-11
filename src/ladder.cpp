@@ -23,18 +23,25 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
     string shorter, longer;
 
     if (length_1 < length_2) {
-        string shorter = str1;
-        string longer = str2;
+        shorter = str1;
+        longer = str2;
     } else {
-        string shorter = str2;
-        string longer = str1;
+        shorter = str2;
+        longer = str1;
     }
 
-    for (int i = 0; i < longer.length(); i++) {
-        if (shorter == longer.substr(0, i) + longer.substr(i + 1))
-            return true;
+    int i = 0, j = 0;
+    while (i < shorter.length() && j < longer.length()) {
+        if (shorter[i] != longer[j]) {
+            if (difference > 0) return false;
+            difference++;
+            j++;
+        } else {
+            i++;
+            j++;
+        }
     }
-    return false;
+    return true;
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
