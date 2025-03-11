@@ -10,7 +10,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     previous.assign(numVertices, UNDEFINED);
 
     priority_queue<pair<int,int>> minHeap;
-    minHeap.push({source,0});
+    minHeap.push({0,source});
     while(!minHeap.empty()) {
         int u = minHeap.top().second;
         minHeap.pop();
