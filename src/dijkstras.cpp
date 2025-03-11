@@ -7,7 +7,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     constexpr int UNDEFINED = -1;
 
     distances[source] = 0;
-    previous[source] = UNDEFINED;
+    previous.assign(numVertices, UNDEFINED);
 
     priority_queue<pair<int,int>> minHeap;
     minHeap.push({source,0});
@@ -20,10 +20,10 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
         for (Edge edge:G[u]) {
             int v = edge.dst;
             int weight = edge.weight;
-            if (!visited[v] && distances[u] + weight < distances[v]) {
+            if (!visited[v] && distances[u] + weight < distances[v] && distances[u] != INF) {
                 distances[v] = distances[u] + weight;
                 previous[v] = u;
-                minHeap.push({v, distances[v]});
+                minHeap.push({distances[v], v});
             }
         }
     }
@@ -44,8 +44,8 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
 
 void print_path(const vector<int>& v, int total) {
     for (size_t i = 0; i < v.size(); i++) {
-        cout << v[i];
-        if (i < v.size() - 1) cout << " ";
+        cout << v[i] << " ";
+
     }
 
     cout << "\nTotal cost is " << total << endl;
